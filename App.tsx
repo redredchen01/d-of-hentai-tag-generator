@@ -57,8 +57,7 @@ const App: React.FC = () => {
         console.error("Failed to load generation settings from localStorage", e);
     }
     return {
-        mainTagsCount: 3,
-        potentialTagsCount: 2,
+        tagsCount: 8,
         descriptionStyle: 'default',
         useThinking: false,
         tagLanguage: 'sc', // Default to Simplified Chinese
@@ -401,7 +400,7 @@ const App: React.FC = () => {
           )}
         </main>
         <footer className="text-center text-xs text-gray-500 mt-auto pb-6 font-mono opacity-60 hover:opacity-100 transition-opacity">
-          <p>Powered by HenHenTai v1.0.4 (Strict Mode)</p>
+          <p>Powered by HenHenTai v2.0.0 (Main Tags Focus)</p>
         </footer>
       </div>
       

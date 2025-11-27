@@ -46,8 +46,7 @@ export const TagDisplay: React.FC<TagDisplayProps> = ({
     return tags.filter(tag => tag.name.toLowerCase().includes(lowerTerm));
   }, [searchTerm]);
 
-  const filteredMainTags = useMemo(() => filterTags(result.mainTags), [result.mainTags, filterTags]);
-  const filteredPotentialTags = useMemo(() => filterTags(result.potentialTags), [result.potentialTags, filterTags]);
+  const filteredTags = useMemo(() => filterTags(result.tags), [result.tags, filterTags]);
 
   const handleCopyAll = (text: string) => {
     if (!text) return;
@@ -63,8 +62,7 @@ export const TagDisplay: React.FC<TagDisplayProps> = ({
   const handleDownloadReport = () => {
       const lines = [
           `【故事詳述】`, result.description, ``,
-          `【主要標籤】`, result.mainTags.map(t => `${t.name} (${t.score})`).join(', '), ``,
-          `【潛力標籤】`, result.potentialTags.map(t => `${t.name} (${t.score})`).join(', '),
+          `【主力標籤】`, result.tags.map(t => `${t.name} (${t.score})`).join(', '),
       ];
 
       if (result.marketingCopy) {
@@ -168,27 +166,12 @@ export const TagDisplay: React.FC<TagDisplayProps> = ({
         )}
       </div>
 
-      {/* Tags Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 animate-slide-in-up" style={{ animationDelay: '200ms' }}>
+      {/* Tags Section */}
+      <div className="animate-slide-in-up" style={{ animationDelay: '200ms' }}>
         <TagSection 
-          title="主要標籤"
-          tags={filteredMainTags}
+          title="主力標籤"
+          tags={filteredTags}
           colorTheme="purple"
-          tagMap={tagMap}
-          onExplainTag={onExplainTag}
-          pinnedTags={pinnedTags}
-          excludedTags={excludedTags}
-          selectedTags={selectedTags}
-          onTogglePin={onTogglePin}
-          onToggleExclude={onToggleExclude}
-          onToggleSelect={handleToggleSelect}
-          onCopyTags={handleCopyTags}
-        />
-
-        <TagSection 
-          title="潛力標籤"
-          tags={filteredPotentialTags}
-          colorTheme="amber"
           tagMap={tagMap}
           onExplainTag={onExplainTag}
           pinnedTags={pinnedTags}

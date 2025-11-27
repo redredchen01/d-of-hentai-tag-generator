@@ -24,38 +24,19 @@ export const GenerationSettingsPanel: React.FC<GenerationSettingsPanelProps> = (
       <div className="space-y-8 relative z-10">
         <div className="space-y-4">
           <div className="flex justify-between items-center">
-            <label htmlFor="main-tags-count" className="font-bold text-gray-200 flex items-center gap-2">
-              主要標籤
-              <span className="text-[10px] font-normal text-gray-500 bg-gray-800 px-2 py-0.5 rounded border border-gray-700">Core Themes</span>
+            <label htmlFor="tags-count" className="font-bold text-gray-200 flex items-center gap-2">
+              主力標籤
+              <span className="text-[10px] font-normal text-gray-500 bg-gray-800 px-2 py-0.5 rounded border border-gray-700">Core Tags</span>
             </label>
-            <span className="text-purple-300 font-bold bg-purple-500/10 border border-purple-500/30 px-3 py-1 rounded-lg text-xs">{settings.mainTagsCount}</span>
+            <span className="text-purple-300 font-bold bg-purple-500/10 border border-purple-500/30 px-3 py-1 rounded-lg text-xs">{settings.tagsCount}</span>
           </div>
           <input
-            id="main-tags-count"
+            id="tags-count"
             type="range"
-            min="2"
-            max="10"
-            value={settings.mainTagsCount}
-            onChange={(e) => handleSettingChange('mainTagsCount', parseInt(e.target.value, 10))}
-            className="w-full h-2 bg-gray-700 rounded-full appearance-none cursor-pointer accent-purple-500 hover:accent-purple-400"
-            disabled={disabled}
-          />
-        </div>
-        <div className="space-y-4">
-          <div className="flex justify-between items-center">
-            <label htmlFor="potential-tags-count" className="font-bold text-gray-200 flex items-center gap-2">
-              潛力標籤
-              <span className="text-[10px] font-normal text-gray-500 bg-gray-800 px-2 py-0.5 rounded border border-gray-700">Sub-Genres</span>
-            </label>
-            <span className="text-purple-300 font-bold bg-purple-500/10 border border-purple-500/30 px-3 py-1 rounded-lg text-xs">{settings.potentialTagsCount}</span>
-          </div>
-          <input
-            id="potential-tags-count"
-            type="range"
-            min="2"
-            max="5"
-            value={settings.potentialTagsCount}
-            onChange={(e) => handleSettingChange('potentialTagsCount', parseInt(e.target.value, 10))}
+            min="3"
+            max="15"
+            value={settings.tagsCount}
+            onChange={(e) => handleSettingChange('tagsCount', parseInt(e.target.value, 10))}
             className="w-full h-2 bg-gray-700 rounded-full appearance-none cursor-pointer accent-purple-500 hover:accent-purple-400"
             disabled={disabled}
           />

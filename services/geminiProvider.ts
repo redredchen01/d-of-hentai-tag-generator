@@ -124,8 +124,7 @@ export class GeminiProvider implements LlmProviderService {
 
         Step 2: **Tag Selection**
         From the "Tag Library" provided below, select the most accurate tags.
-        - Main Tags: Select exactly ${settings.mainTagsCount} tags that define the core theme.
-        - Potential Tags: Select exactly ${settings.potentialTagsCount} tags that represent sub-themes or specific fetishes/elements.
+        - Tags: Select exactly ${settings.tagsCount} tags that define the core themes and story elements.
         ${langInstruction}
         - Score: Assign a relevance score (0-100).
         ${feedbackInstruction}
@@ -137,8 +136,7 @@ export class GeminiProvider implements LlmProviderService {
         Return raw JSON only. No Markdown. No explanations outside the JSON.
         {
           "description": "...",
-          "mainTags": [ { "name": "Tag Name", "score": 95 } ],
-          "potentialTags": [ { "name": "Tag Name", "score": 75 } ]
+          "tags": [ { "name": "Tag Name", "score": 95 } ]
         }
         `;
 
@@ -169,15 +167,14 @@ export class GeminiProvider implements LlmProviderService {
             throw new SyntaxError("Failed to parse AI response as JSON.");
         }
 
-        if (!parsedResult.description || !Array.isArray(parsedResult.mainTags)) {
+        if (!parsedResult.description || !Array.isArray(parsedResult.tags)) {
             throw new Error("Invalid JSON structure: missing core fields.");
         }
 
         // --- POST-PROCESSING VALIDATION ---
         // Forcefully map tags to the requested language using the internal CSV library
         const targetLang = settings.tagLanguage || 'sc';
-        parsedResult.mainTags = normalizeTags(parsedResult.mainTags, targetLang);
-        parsedResult.potentialTags = normalizeTags(parsedResult.potentialTags, targetLang);
+        parsedResult.tags = normalizeTags(parsedResult.tags, targetLang);
         // ----------------------------------
 
         return parsedResult as GeneratedTagsResult;

@@ -51,8 +51,7 @@ const createPrompt = (tagLibraryCsv: string, settings: GenerationSettings, pinne
 
     Step 2: **Tag Selection**
     From the "Tag Library" provided below, select the most accurate tags.
-    - Main Tags: Select exactly ${settings.mainTagsCount} tags.
-    - Potential Tags: Select exactly ${settings.potentialTagsCount} tags.
+    - Tags: Select exactly ${settings.tagsCount} tags.
     ${langInstruction}
     - Score: Assign a relevance score (0-100).
     ${feedbackInstruction}
@@ -64,8 +63,7 @@ const createPrompt = (tagLibraryCsv: string, settings: GenerationSettings, pinne
     Return raw JSON only.
     {
       "description": "...",
-      "mainTags": [ { "name": "Tag Name", "score": 95 } ],
-      "potentialTags": [ { "name": "Tag Name", "score": 75 } ]
+      "tags": [ { "name": "Tag Name", "score": 95 } ]
     }
     `;
 };
@@ -210,15 +208,14 @@ export class OpenAICompatibleProvider implements LlmProviderService {
             throw new Error("Failed to parse valid JSON from model response.");
         }
 
-        if (!parsedResult.description || !Array.isArray(parsedResult.mainTags)) {
+        if (!parsedResult.description || !Array.isArray(parsedResult.tags)) {
             throw new Error("Invalid JSON structure.");
         }
 
         // --- POST-PROCESSING VALIDATION ---
         // Forcefully map tags to the requested language using the internal CSV library
         const targetLang = settings.tagLanguage || 'sc';
-        parsedResult.mainTags = normalizeTags(parsedResult.mainTags, targetLang);
-        parsedResult.potentialTags = normalizeTags(parsedResult.potentialTags, targetLang);
+        parsedResult.tags = normalizeTags(parsedResult.tags, targetLang);
         // ----------------------------------
 
         return parsedResult as GeneratedTagsResult;

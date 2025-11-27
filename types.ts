@@ -17,11 +17,10 @@ export interface OpenAICompatConfig {
 }
 
 export interface GenerationSettings {
-  mainTagsCount: number;
-  potentialTagsCount: number;
+  tagsCount: number;
   descriptionStyle: 'default' | 'emotion' | 'plot' | 'teen';
   useThinking?: boolean;
-  tagLanguage: 'sc' | 'tc' | 'en'; // New field
+  tagLanguage: 'sc' | 'tc' | 'en';
 }
 
 export interface GenerationResponse {
@@ -92,8 +91,7 @@ export interface GeneratedMarketingCopy {
 
 export interface GeneratedTagsResult {
   description: string;
-  mainTags: GeneratedTag[];
-  potentialTags: GeneratedTag[];
+  tags: GeneratedTag[];
   marketingCopy?: GeneratedMarketingCopy;
 }
 
